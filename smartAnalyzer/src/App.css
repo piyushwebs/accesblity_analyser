@@ -1,0 +1,26 @@
+/* Remove all default browser + Vite styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+:root {
+  font-family: inherit;
+  line-height: normal;
+  font-weight: normal;
+
+  color: inherit;
+  background-color: transparent;
+
+  font-synthesis: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
