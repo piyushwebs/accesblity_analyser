@@ -6,6 +6,7 @@ function ResultPage() {
   const { scanId } = useParams();
   const [data, setData] = useState(null);
   const [loadingViolation, setLoadingViolation] = useState(null);
+  const [mode,setMode] = useState("")
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +22,13 @@ function ResultPage() {
       navigate(`/result/${scanId}/violations/${index}`);
     }, 200);
   };
+
+  const handleNavigation = (mode1,index) =>{
+        setMode(mode1);
+        navigate(`/result/${scanId}/violations/${index}/ai?`,{
+          state:{mode:mode1}
+        });
+  }
 
   if (!data) {
     return (
@@ -105,8 +113,11 @@ function ResultPage() {
                             >
                               View Details
                             </button>
-                            <button className="btn btn--secondary" disabled>
-                              Ask AI
+                            <button className="btn btn--secondary" onClick={() => handleNavigation("chat",index)}>
+                              Ask Related questions
+                            </button>
+                            <button className="btn btn--secondary" onClick={() => handleNavigation("structured",index)}>
+                              Get fix guide
                             </button>
                           </div>
                         </td>

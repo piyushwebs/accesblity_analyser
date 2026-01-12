@@ -1,7 +1,7 @@
 const Scan = require("../models/Scan.js");
 const { scanPage } = require("../services/accesiblityServices.js");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { askAi } = require("../services/aiService.js");
+const { askAI,safeJsonParse } = require("../services/aiService.js");
 const {
   buildStructuredPrompt,
   buildChatPrompt,
@@ -101,42 +101,36 @@ module.exports.getAiAnswer = async (req, res) => {
 
   let prompt;
 
-  if(mode === "structured")
-  {
+  if (mode === "structured") {
     prompt = buildStructuredPrompt(violation);
   }
 
-
-  if(mode === "chat")
-  {
-    if(!userQuestion)
-    {
+  if (mode === "chat") {
+    if (!userQuestion) {
       return res.status(404).json({
-        message:"userQuestion is required for chat mode"
+        message: "userQuestion is required for chat mode",
       });
     }
-    prompt = buildChatPrompt(violation,userQuestion);
+    prompt = buildChatPrompt(violation, userQuestion);
   }
 
-  const result = await model.generateContent(prompt);
-  const aiText = result.response.text();
+  const aiText = await askAI(prompt);
 
-  if(mode === structured)
-  {
-    let parsed;
-    try{
-      parsed = json.parse(aiText);
-    }
-    catch{
-      return res.status(500).json({
-        message:"Ai returned invalid JSON",
-        raw:aiText
-      });
-    }
-    return res.json(parsed);
+
+  if (mode === "structured") {
+  const parsed = await safeJsonParse(aiText);
+  console.log(parsed);
+
+  if (!parsed) {
+    return res.status(500).json({
+      message: "Failed to parse AI JSON",
+      raw: aiText
+    });
   }
 
-return res.json({ answer: aiText });
+  return res.json(parsed);
+}
+  return res.json({ answer: aiText });
 };
 
 module.exports.home = async (req, res) => {

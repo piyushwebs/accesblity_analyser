@@ -1,0 +1,540 @@
+/* ============================================================================
+   VIOLATIONDETAILS.CSS - Individual Violation Details Display
+   ============================================================================
+   
+   This stylesheet provides styling for the ViolationDetails component,
+   maintaining consistency with the ResultPage and HomePage design system.
+   
+   Design Approach: Clean, focused layout optimized for reading detailed
+   violation information with clear visual hierarchy.
+   ============================================================================ */
+
+/* ============================================================================
+   CSS CUSTOM PROPERTIES - Design System (Inherited)
+   ============================================================================ */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-primary-light: #818cf8;
+  
+  /* Background Colors */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-card: #1e293b;
+  
+  /* Text Colors */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  
+  /* Status Colors */
+  --color-error: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  
+  /* Impact Level Colors */
+  --color-impact-critical: #ef4444;
+  --color-impact-serious: #f97316;
+  --color-impact-moderate: #f59e0b;
+  --color-impact-minor: #eab308;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  
+  /* Typography */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+}
+
+/* ============================================================================
+   MAIN CONTAINER
+   ============================================================================ */
+
+.violation-details {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.violation-details__container {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ============================================================================
+   LOADING STATE
+   ============================================================================ */
+
+.violation-details__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--spacing-md);
+}
+
+.violation-details__loading-text {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.violation-details__spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--color-bg-tertiary);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================================
+   BACK BUTTON
+   ============================================================================ */
+
+.violation-details__back {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================================================
+   HEADER SECTION
+   ============================================================================ */
+
+.violation-details__header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.violation-details__header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.violation-details__title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+/* ============================================================================
+   IMPACT BADGE
+   ============================================================================ */
+
+.impact-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.025em;
+}
+
+.impact-badge--critical {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-impact-critical);
+  border: 1px solid var(--color-impact-critical);
+}
+
+.impact-badge--serious {
+  background-color: rgba(249, 115, 22, 0.15);
+  color: var(--color-impact-serious);
+  border: 1px solid var(--color-impact-serious);
+}
+
+.impact-badge--moderate {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: var(--color-impact-moderate);
+  border: 1px solid var(--color-impact-moderate);
+}
+
+.impact-badge--minor {
+  background-color: rgba(234, 179, 8, 0.15);
+  color: var(--color-impact-minor);
+  border: 1px solid var(--color-impact-minor);
+}
+
+/* ============================================================================
+   CONTENT CARD
+   ============================================================================ */
+
+.violation-details__content {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-bg-tertiary);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* ============================================================================
+   DETAIL SECTIONS
+   ============================================================================ */
+
+.detail-section {
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-bg-tertiary);
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.detail-section__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.detail-section__title::before {
+  content: '';
+  width: 4px;
+  height: 1.25rem;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
+/* Violation ID specific styling */
+.detail-section__id {
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-lg);
+  color: var(--color-primary-light);
+  background-color: var(--color-bg-tertiary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-primary);
+  margin: 0;
+  word-break: break-all;
+}
+
+/* Regular text content */
+.detail-section__text {
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Documentation Link */
+.detail-section__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.detail-section__link:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.detail-section__link:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.detail-section__link-icon {
+  font-size: var(--font-size-lg);
+  transition: transform var(--transition-base);
+}
+
+.detail-section__link:hover .detail-section__link-icon {
+  transform: translateX(4px);
+}
+
+/* ============================================================================
+   ACTION BUTTONS
+   ============================================================================ */
+
+.violation-details__actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Primary Button */
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.btn--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary Button */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-bg-tertiary);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-tertiary);
+}
+
+/* Back Button */
+.btn--back {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-bg-tertiary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.btn--back:hover {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+/* Disabled State */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+/* Tablet (768px - 1199px) */
+@media (max-width: 1199px) {
+  .violation-details {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .violation-details__title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .violation-details__content {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Mobile (below 768px) */
+@media (max-width: 767px) {
+  .violation-details {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+  
+  .violation-details__header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .violation-details__title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .violation-details__content {
+    padding: var(--spacing-md);
+  }
+  
+  .detail-section {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+  }
+  
+  .detail-section__title {
+    font-size: var(--font-size-base);
+  }
+  
+  .detail-section__id {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm);
+  }
+  
+  .detail-section__text {
+    font-size: var(--font-size-sm);
+  }
+  
+  .violation-details__actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .detail-section__link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Small Mobile (below 480px) */
+@media (max-width: 479px) {
+  .violation-details__title {
+    font-size: var(--font-size-lg);
+  }
+  
+  .detail-section__title {
+    font-size: var(--font-size-sm);
+  }
+  
+  .btn {
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION PREFERENCE
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================================================ */
+
+@media (prefers-contrast: high) {
+  .btn--primary {
+    border: 2px solid var(--color-primary-light);
+  }
+  
+  .btn--secondary {
+    border: 2px solid var(--color-text-secondary);
+  }
+  
+  .impact-badge {
+    border-width: 2px;
+  }
+  
+  .detail-section__link {
+    border: 2px solid var(--color-primary-light);
+  }
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+  .violation-details {
+    background-color: white;
+    color: black;
+  }
+  
+  .btn {
+    display: none;
+  }
+  
+  .violation-details__back {
+    display: none;
+  }
+  
+  .violation-details__actions {
+    display: none;
+  }
+}

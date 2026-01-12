@@ -8,6 +8,13 @@ You MUST respond ONLY in valid JSON.
 DO NOT use markdown.
 DO NOT add extra text.
 
+STRICT RULES:
+- Output MUST be valid JSON
+- DO NOT use trailing commas
+- DO NOT include comments
+- DO NOT include markdown
+- Strings must use double quotes only
+
 Analyze the following accessibility violation:
 
 Rule ID: ${violation.id}
