@@ -12,7 +12,7 @@ const routes = require("./routes/routes");
 
 app.use("/api",routes);
 
-const port = process.env.port || 1102;
+const port = process.env.port || 1104;
 const mongo_url = process.env.mongo_url;
 
 

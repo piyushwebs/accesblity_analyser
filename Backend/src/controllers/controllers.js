@@ -20,6 +20,10 @@ module.exports.runScan = async (req, res) => {
 
     const data = await scanPage(url);
 
+    if (!data) {
+      throw new Error("Scan page returned no data");
+    }
+
     const scan = await Scan.create({
       url: data.url,
       summary: data.summary,

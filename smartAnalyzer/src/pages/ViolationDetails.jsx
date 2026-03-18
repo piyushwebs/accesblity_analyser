@@ -9,7 +9,7 @@ function ViolationDetails() {
   const [mode,setMode] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:1102/api/analyse/${scanId}`)
+    fetch(`http://localhost:1104/api/analyse/${scanId}`)
       .then((res) => res.json())
       .then(data => {
         setData(data.violations[index])

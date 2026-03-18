@@ -37,7 +37,7 @@ function AiPage() {
           : { mode: "structured" };
 
       const response = await fetch(
-        `http://localhost:1102/api/ai/example/${scanId}/${index}`,
+        `http://localhost:1104/api/ai/example/${scanId}/${index}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

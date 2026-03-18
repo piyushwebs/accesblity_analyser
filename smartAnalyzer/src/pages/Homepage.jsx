@@ -33,7 +33,7 @@ const HomePage = () => {
 
     try {
       // API call to backend
-      const response = await fetch("http://localhost:1102/api/analyse", {
+      const response = await fetch("http://localhost:1104/api/analyse", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,11 +41,17 @@ const HomePage = () => {
         body: JSON.stringify({ url }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to analyze website");
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        // Fallback if not JSON
       }
 
-      const data = await response.json();
+      if (!response.ok) {
+        const errorMsg = data?.error || data?.message || "Failed to analyze website";
+        throw new Error(errorMsg);
+      }
 
       console.log("Analyse response:", data);
 

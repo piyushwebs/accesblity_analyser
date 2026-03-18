@@ -3,8 +3,11 @@ const axeCore = require("axe-core");
 
 exports.scanPage = async (url) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ['--disable-web-security', '--disable-features=IsolateOrigins,site-per-process']
+    });
     const page = await browser.newPage();
+    await page.setBypassCSP(true);
 
     await page.goto(url, {
       waitUntil: "domcontentloaded",
@@ -35,6 +38,7 @@ exports.scanPage = async (url) => {
       rawResult: results,
     };
   } catch (err) {
-    console.log("error: ", err);
+    console.error("Puppeteer/axe error: ", err);
+    throw err;
   }
 };
