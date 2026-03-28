@@ -1,6 +1,7 @@
 import './ViolationDetails.css';
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { FixSuggestionPanel } from '../components/FixSuggestionPanel';
 
 function ViolationDetails() {
   const { scanId, index } = useParams();
@@ -82,7 +83,19 @@ function ViolationDetails() {
           {/* Help Section */}
           <div className="detail-section">
             <h2 className="detail-section__title">How to Fix</h2>
-            <p className="detail-section__text">{data.help}</p>
+            <div style={{ marginTop: '1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <FixSuggestionPanel 
+                scanId={scanId}
+                index={index}
+                issue={{
+                  title: data.help,
+                  severity: data.impact,
+                  description: data.description,
+                  fixSuggestion: data.help,
+                  codeExample: data.nodes && data.nodes.length > 0 ? data.nodes[0].html : null
+                }} 
+              />
+            </div>
           </div>
 
           {/* Documentation Link */}

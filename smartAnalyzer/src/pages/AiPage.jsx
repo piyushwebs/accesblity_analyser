@@ -31,8 +31,10 @@ function AiPage() {
     setError("");
 
     try {
+      const requestMode = userMessage ? "chat" : mode;
+
       const body =
-        mode === "chat"
+        requestMode === "chat"
           ? { mode: "chat", userQuestion: userMessage || question }
           : { mode: "structured" };
 
@@ -50,7 +52,7 @@ function AiPage() {
       const data = await response.json();
 
       const aiText =
-        mode === "chat"
+        requestMode === "chat"
           ? data.answer
           : `Summary:\n${data.summary}\n\nWhy it matters:\n${data.why_it_matters}\n\nHow to fix:\n${data.how_to_fix}\n\nCode:\n${data.code_examples?.good_example}`;
 
@@ -105,22 +107,25 @@ function AiPage() {
         <div ref={chatEndRef} />
       </div>
 
-      {mode === "chat" && (
-        <div className="chat-input-area">
-          <input
-            type="text"
-            placeholder="Ask a follow-up question..."
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-            className="chat-input"
-          />
-          <button onClick={handleSubmit} className="send-button">
-            <span className="button-text">Send</span>
-            <span className="button-icon">→</span>
-          </button>
-        </div>
-      )}
+      <div className="chat-input-area">
+        <input
+          type="text"
+          placeholder={loading ? "Please wait until the response is generated..." : "Ask a follow-up question..."}
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && !loading && handleSubmit()}
+          className="chat-input"
+          disabled={loading}
+        />
+        <button 
+          onClick={handleSubmit} 
+          className="send-button"
+          disabled={loading}
+        >
+          <span className="button-text">Send</span>
+          <span className="button-icon">→</span>
+        </button>
+      </div>
 
       {error && <p className="error-text">{error}</p>}
     </div>

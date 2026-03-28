@@ -1,0 +1,16 @@
+[dotenv@17.2.3] injecting env (2) from .env -- tip: ΓÜÖ∩╕Å  suppress all logs with { quiet: true }
+Server is running on 1103
+MongoDB connected succesfully!!
+error:  ProtocolError: Protocol error (Page.navigate): Cannot navigate to invalid URL
+    at <instance_members_initializer> (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\common\CallbackRegistry.js:103:14)
+    at new Callback (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\common\CallbackRegistry.js:107:16)
+    at CallbackRegistry.create (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\common\CallbackRegistry.js:25:26)
+    at Connection._rawSend (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Connection.js:108:26)
+    at CdpCDPSession.send (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\CdpSession.js:74:33)
+    at navigate (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Frame.js:173:51)
+    at CdpFrame.goto (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Frame.js:151:17)
+    at CdpFrame.<anonymous> (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\util\decorators.js:109:27)
+    at CdpPage.goto (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\node_modules\puppeteer-core\lib\cjs\puppeteer\api\Page.js:572:43)
+    at exports.scanPage (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\src\services\accesiblityServices.js:9:16)
+TypeError: Cannot read properties of undefined (reading 'url')
+    at module.exports.runScan (D:\Mern(WEB-D)\MyProject\MyFirstResumeProject\Backend\src\controllers\controllers.js:24:17)
